@@ -1,26 +1,26 @@
 {% extends 'tasks/base.html' %}
 {% block title %}{% if form.instance.pk %}Edit Event{% else %}Create Event{% endif %}{% endblock %}
 {% block content %}
-<div class="max-w-lg mx-auto bg-white p-8 rounded shadow">
-    <h2 class="text-2xl font-bold mb-6">
+<div class="max-w-lg mx-auto bg-white p-8 rounded border border-stone-200 shadow-sm">
+    <h2 class="font-display text-2xl font-semibold mb-6 text-indigo-950">
         {% if form.instance.pk %}Edit Event{% else %}Create New Event{% endif %}
     </h2>
     <form method="post" enctype="multipart/form-data" class="space-y-4">
         {% csrf_token %}
         {% for field in form %}
         <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">{{ field.label }}</label>
+            <label class="block text-sm font-medium text-slate-600 mb-1">{{ field.label }}</label>
             {{ field }}
             {% if field.errors %}
                 <p class="text-red-600 text-sm mt-1">{{ field.errors|striptags }}</p>
             {% endif %}
         </div>
         {% endfor %}
-        <div class="flex items-center space-x-3 pt-2">
-            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+        <div class="flex items-center space-x-4 pt-2">
+            <button type="submit" class="bg-indigo-950 text-white px-5 py-2 rounded hover:bg-indigo-900 transition-colors font-medium">
                 Save
             </button>
-            <a href="{% url 'event_list' %}" class="text-gray-600 hover:underline">Cancel</a>
+            <a href="{% url 'event_list' %}" class="text-slate-500 hover:text-amber-600 transition-colors">Cancel</a>
         </div>
     </form>
 </div>
