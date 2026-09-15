@@ -2,25 +2,28 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
-<h1 class="text-2xl font-bold mb-4">Dashboard</h1>
+<h1 class="font-display text-2xl font-semibold text-indigo-950 mb-6">Dashboard</h1>
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-    <div class="bg-white p-4 rounded shadow">
-        <p class="text-sm text-gray-600">Total Events</p>
-        <p class="text-3xl font-bold">{{ total_events }}</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+    <div class="bg-white p-5 rounded border border-stone-200 border-l-4 border-l-amber-400 shadow-sm">
+        <p class="text-sm text-slate-500">Total Events</p>
+        <p class="font-display text-4xl font-semibold text-indigo-950 mt-1">{{ total_events }}</p>
     </div>
-    <div class="bg-white p-4 rounded shadow">
-        <p class="text-sm text-gray-600">Total Participants</p>
-        <p class="text-3xl font-bold">{{ total_participants }}</p>
+    <div class="bg-white p-5 rounded border border-stone-200 border-l-4 border-l-amber-400 shadow-sm">
+        <p class="text-sm text-slate-500">Total Participants</p>
+        <p class="font-display text-4xl font-semibold text-indigo-950 mt-1">{{ total_participants }}</p>
     </div>
 </div>
 
-<h2 class="text-xl font-semibold mb-2">Upcoming Events</h2>
-<ul class="bg-white rounded shadow divide-y">
+<h2 class="font-display text-xl font-semibold text-indigo-950 mb-3">Upcoming Events</h2>
+<ul class="bg-white rounded border border-stone-200 divide-y divide-stone-100 shadow-sm">
     {% for event in upcoming_events %}
-    <li class="p-4">{{ event.name }} — {{ event.date }}</li>
+    <li class="p-4 flex items-center justify-between">
+        <span class="text-slate-700">{{ event.name }}</span>
+        <span class="text-sm font-medium text-amber-700 bg-amber-50 px-2.5 py-1 rounded">{{ event.date }}</span>
+    </li>
     {% empty %}
-    <li class="p-4 text-gray-500">No upcoming events.</li>
+    <li class="p-4 text-slate-400">No upcoming events.</li>
     {% endfor %}
 </ul>
 {% endblock %}
