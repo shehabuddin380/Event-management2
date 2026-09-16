@@ -2,25 +2,25 @@
 {% block title %}Participants{% endblock %}
 
 {% block content %}
-<div class="flex justify-between items-center mb-4">
-    <h1 class="text-2xl font-bold">Participants</h1>
-    <a href="{% url 'participant_create' %}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">+ New Participant</a>
+<div class="flex justify-between items-center mb-6">
+    <h1 class="font-display text-2xl font-semibold text-indigo-950">Participants</h1>
+    <a href="{% url 'participant_create' %}" class="bg-indigo-950 text-white px-4 py-2 rounded hover:bg-indigo-900 transition-colors font-medium">+ New Participant</a>
 </div>
 
-<ul class="bg-white rounded shadow divide-y">
+<ul class="bg-white rounded border border-stone-200 divide-y divide-stone-100 shadow-sm">
     {% for participant in participants %}
-    <li class="p-4 flex justify-between items-center">
+    <li class="p-4 flex justify-between items-center border-l-4 border-l-transparent hover:border-l-amber-400 transition-colors">
         <div>
-            <p class="font-semibold">{{ participant.name }}</p>
-            <p class="text-sm text-gray-600">{{ participant.email }}</p>
+            <p class="font-semibold text-slate-800">{{ participant.name }}</p>
+            <p class="text-sm text-slate-500">{{ participant.email }}</p>
         </div>
-        <div class="space-x-3">
-            <a href="{% url 'participant_edit' participant.pk %}" class="text-blue-600 hover:underline">Edit</a>
-            <a href="{% url 'participant_delete' participant.pk %}" class="text-red-600 hover:underline">Delete</a>
+        <div class="space-x-4 text-sm font-medium">
+            <a href="{% url 'participant_edit' participant.pk %}" class="text-indigo-700 hover:text-amber-600">Edit</a>
+            <a href="{% url 'participant_delete' participant.pk %}" class="text-red-600 hover:text-red-700">Delete</a>
         </div>
     </li>
     {% empty %}
-    <li class="p-4 text-gray-500">No participants yet.</li>
+    <li class="p-4 text-slate-400">No participants yet.</li>
     {% endfor %}
 </ul>
 {% endblock %}
