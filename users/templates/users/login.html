@@ -1,17 +1,30 @@
 {% extends 'tasks/base.html' %}
 {% block title %}Login{% endblock %}
 {% block content %}
-<div class="max-w-md mx-auto bg-white p-8 rounded shadow">
-    <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
+<div class="max-w-md mx-auto bg-white p-8 rounded border border-stone-200 shadow-sm mt-6">
+    <h2 class="font-display text-2xl font-semibold mb-6 text-center text-indigo-950">Login</h2>
     <form method="post" class="space-y-4">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+        {% for field in form %}
+        <div>
+            <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-slate-600 mb-1">
+                {{ field.label }}
+            </label>
+            {{ field }}
+            {% for error in field.errors %}
+            <p class="text-xs text-red-600 mt-1">{{ error }}</p>
+            {% endfor %}
+        </div>
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+        <p class="text-sm text-red-600">{{ error }}</p>
+        {% endfor %}
+        <button type="submit" class="w-full bg-indigo-950 text-white py-2 rounded hover:bg-indigo-900 transition-colors font-medium">
             Login
         </button>
     </form>
-    <p class="text-center mt-4 text-gray-600">
-        Don't have an account? <a href="{% url 'register' %}" class="text-blue-600 hover:underline">Sign up</a>
+    <p class="text-center mt-4 text-slate-500">
+        Don't have an account? <a href="{% url 'register' %}" class="text-amber-600 hover:underline">Sign up</a>
     </p>
 </div>
 {% endblock %}
