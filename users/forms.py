@@ -1,6 +1,13 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import (
+    UserCreationForm,
+    UserChangeForm,
+    AuthenticationForm,
+)
 from django.contrib.auth.models import User
+
+INPUT_CLASS = "w-full border border-slate-300 rounded px-3 py-2 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition-colors"
+
 
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -13,15 +20,15 @@ class CustomUserCreationForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        for field_name, field in self.fields.items():
+        for field in self.fields.values():
             field.widget.attrs.update({
-                'class': 'w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500',
+                'class': INPUT_CLASS,
                 'placeholder': field.label,
             })
 
 
 class CustomUserChangeForm(UserChangeForm):
-    password = None  # password field edit form এ দেখাতে চাই না
+    password = None  # edit form-e password field dekhate chai na
     email = forms.EmailField(required=True)
     phone = forms.CharField(required=False)
     profile_picture = forms.ImageField(required=False)
@@ -32,8 +39,18 @@ class CustomUserChangeForm(UserChangeForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        for field_name, field in self.fields.items():
+        for field in self.fields.values():
             field.widget.attrs.update({
-                'class': 'w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500',
+                'class': INPUT_CLASS,
+                'placeholder': field.label,
+            })
+
+
+class CustomAuthenticationForm(AuthenticationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs.update({
+                'class': INPUT_CLASS,
                 'placeholder': field.label,
             })
