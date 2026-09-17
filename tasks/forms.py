@@ -1,7 +1,8 @@
 from django import forms
 from .models import Event, Category, Participant
 
-INPUT_CLASS = "w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+INPUT_CLASS = "w-full border border-slate-300 rounded px-3 py-2 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition-colors"
+
 
 class EventForm(forms.ModelForm):
     class Meta:
@@ -18,6 +19,7 @@ class EventForm(forms.ModelForm):
             'rsvp_users': forms.SelectMultiple(attrs={'class': INPUT_CLASS}),
         }
 
+
 class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
@@ -26,6 +28,7 @@ class CategoryForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'class': INPUT_CLASS}),
             'description': forms.Textarea(attrs={'class': INPUT_CLASS, 'rows': 3}),
         }
+
 
 class ParticipantForm(forms.ModelForm):
     class Meta:
