@@ -2,35 +2,48 @@
 {% block title %}All Events{% endblock %}
 
 {% block content %}
-<div class="flex justify-between items-center mb-4">
-    <h1 class="text-2xl font-bold">All Events</h1>
-    <a href="{% url 'event_create' %}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">+ New Event</a>
+<div class="flex justify-between items-center mb-6">
+    <h1 class="font-display text-2xl font-semibold text-indigo-950">All Events</h1>
+    <a href="{% url 'event_create' %}" class="bg-indigo-950 text-white px-4 py-2 rounded hover:bg-indigo-900 transition-colors font-medium">+ New Event</a>
 </div>
 
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     {% for event in events %}
-    <div class="bg-white rounded shadow overflow-hidden flex flex-col">
-        {% if event.image %}
-            <img src="{{ event.image.url }}" class="w-full h-40 object-cover">
-        {% else %}
-            <div class="w-full h-40 bg-gray-200 flex items-center justify-center text-gray-400 text-sm">
-                No Image
-            </div>
-        {% endif %}
+    <div class="bg-white rounded border border-stone-200 shadow-sm overflow-hidden flex flex-col">
+        <div class="relative">
+            {% if event.image %}
+                <img src="{{ event.image.url }}" class="w-full h-40 object-cover">
+            {% else %}
+                <div class="w-full h-40 bg-stone-100 flex items-center justify-center text-stone-400 text-sm">
+                    No Image
+                </div>
+            {% endif %}
+            <span class="absolute top-3 right-3 bg-amber-400 text-indigo-950 text-xs font-semibold px-2.5 py-1 rounded shadow">
+                {{ event.date }}
+            </span>
+        </div>
+
+        <!-- ticket-stub perforation -->
+        <div class="border-t border-dashed border-stone-300 relative">
+            <div class="absolute -left-2 -top-2 w-4 h-4 bg-stone-50 rounded-full"></div>
+            <div class="absolute -right-2 -top-2 w-4 h-4 bg-stone-50 rounded-full"></div>
+        </div>
+
         <div class="p-4 flex-1 flex flex-col">
-            <h2 class="text-lg font-semibold">{{ event.name }}</h2>
-            <p class="text-sm text-gray-600">{{ event.date }} — {{ event.time }}</p>
-            <p class="text-sm text-gray-600">{{ event.location }}</p>
-            <p class="text-sm text-gray-500 mt-1">Category: {{ event.category.name }}</p>
-            <div class="mt-auto pt-3 flex space-x-3">
-                <a href="{% url 'event_edit' event.pk %}" class="text-blue-600 hover:underline">Edit</a>
-                <a href="{% url 'event_delete' event.pk %}" class="text-red-600 hover:underline">Delete</a>
-                <a href="{% url 'rsvp_event' event.pk %}" class="text-green-600 hover:underline">RSVP</a>
+            <h2 class="font-display text-lg font-semibold text-indigo-950">{{ event.name }}</h2>
+            <p class="text-sm text-slate-500 mt-1">{{ event.time }} · {{ event.location }}</p>
+            <span class="inline-block mt-2 text-xs font-medium text-amber-700 bg-amber-50 px-2 py-0.5 rounded w-fit">
+                {{ event.category.name }}
+            </span>
+            <div class="mt-auto pt-4 flex space-x-4 text-sm font-medium border-t border-stone-100 mt-4">
+                <a href="{% url 'event_edit' event.pk %}" class="text-indigo-700 hover:text-amber-600">Edit</a>
+                <a href="{% url 'event_delete' event.pk %}" class="text-red-600 hover:text-red-700">Delete</a>
+                <a href="{% url 'rsvp_event' event.pk %}" class="text-emerald-700 hover:text-emerald-800 ml-auto">RSVP →</a>
             </div>
         </div>
     </div>
     {% empty %}
-    <p class="text-gray-500">No events yet.</p>
+    <p class="text-slate-400 col-span-full">No events yet.</p>
     {% endfor %}
 </div>
 {% endblock %}
