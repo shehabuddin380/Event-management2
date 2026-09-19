@@ -1,5 +1,5 @@
 {% extends 'tasks/base.html' %}
-{% block title %}Login{% endblock %}
+{% block title %}Signup{% endblock %}
 {% block content %}
 <div class="max-w-4xl mx-auto rounded-lg border border-stone-200 shadow-sm overflow-hidden grid grid-cols-1 md:grid-cols-2 mt-6 bg-white">
 
@@ -17,20 +17,20 @@
 
         <div class="relative z-10">
             <p class="font-display text-xl leading-snug mb-3">
-                "Welcome back — your next event is waiting."
+                "Every great event starts with one signup."
             </p>
             <p class="text-sm text-stone-400">
-                Log in to manage your events, categories and participants.
+                Create, organize and track events, categories and participants — all in one place.
             </p>
         </div>
     </div>
 
     <!-- Form panel -->
     <div class="p-8 md:p-10">
-        <h2 class="font-display text-2xl font-semibold mb-1 text-indigo-950">Welcome Back</h2>
-        <p class="text-sm text-slate-500 mb-6">Login to continue to your dashboard.</p>
+        <h2 class="font-display text-2xl font-semibold mb-1 text-indigo-950">Create an Account</h2>
+        <p class="text-sm text-slate-500 mb-6">Sign up to start managing your events.</p>
 
-        <form method="post" class="space-y-4">
+        <form method="post" enctype="multipart/form-data" class="space-y-4">
             {% csrf_token %}
             {% for field in form %}
             <div>
@@ -43,16 +43,13 @@
                 {% endfor %}
             </div>
             {% endfor %}
-            {% for error in form.non_field_errors %}
-            <p class="text-sm text-red-600">{{ error }}</p>
-            {% endfor %}
 
             <button type="submit" class="w-full bg-indigo-950 text-white py-2.5 rounded hover:bg-indigo-900 transition-colors font-medium">
-                Login
+                Signup
             </button>
         </form>
         <p class="text-center mt-6 text-sm text-slate-500">
-            Don't have an account? <a href="{% url 'register' %}" class="text-amber-600 font-medium hover:underline">Sign up</a>
+            Already have an account? <a href="{% url 'login' %}" class="text-amber-600 font-medium hover:underline">Login</a>
         </p>
     </div>
 </div>
