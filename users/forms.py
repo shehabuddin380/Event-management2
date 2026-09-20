@@ -4,7 +4,9 @@ from django.contrib.auth.forms import (
     UserChangeForm,
     AuthenticationForm,
 )
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 INPUT_CLASS = "w-full border border-slate-300 rounded px-3 py-2 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition-colors"
 
