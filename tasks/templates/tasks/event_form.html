@@ -1,26 +1,88 @@
 {% extends 'tasks/base.html' %}
 {% block title %}{% if form.instance.pk %}Edit Event{% else %}Create Event{% endif %}{% endblock %}
 {% block content %}
-<div class="max-w-lg mx-auto bg-white p-8 rounded border border-stone-200 shadow-sm">
-    <h2 class="font-display text-2xl font-semibold mb-6 text-indigo-950">
-        {% if form.instance.pk %}Edit Event{% else %}Create New Event{% endif %}
-    </h2>
-    <form method="post" enctype="multipart/form-data" class="space-y-4">
+<div class="max-w-2xl mx-auto bg-white rounded-lg border border-stone-200 shadow-sm overflow-hidden mt-6">
+
+    <!-- Header strip -->
+    <div class="bg-indigo-950 px-8 py-6 relative overflow-hidden">
+        <div class="absolute -right-6 -top-6 w-24 h-24 rounded-full bg-amber-400/10"></div>
+        <h2 class="font-display text-2xl font-semibold text-white relative z-10">
+            {% if form.instance.pk %}Edit Event{% else %}Create New Event{% endif %}
+        </h2>
+        <p class="text-stone-400 text-sm mt-1 relative z-10">
+            {% if form.instance.pk %}Update the details below.{% else %}Fill in the details to publish a new event.{% endif %}
+        </p>
+    </div>
+
+    <form method="post" enctype="multipart/form-data" class="p-8 space-y-5">
         {% csrf_token %}
+
         {% for field in form %}
-        <div>
-            <label class="block text-sm font-medium text-slate-600 mb-1">{{ field.label }}</label>
-            {{ field }}
-            {% if field.errors %}
-                <p class="text-red-600 text-sm mt-1">{{ field.errors|striptags }}</p>
+            {% if field.name == 'name' or field.name == 'description' %}
+            <div>
+                <label class="block text-sm font-medium text-slate-600 mb-1">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    <p class="text-red-600 text-sm mt-1">{{ field.errors|striptags }}</p>
+                {% endif %}
+            </div>
             {% endif %}
-        </div>
         {% endfor %}
-        <div class="flex items-center space-x-4 pt-2">
-            <button type="submit" class="bg-indigo-950 text-white px-5 py-2 rounded hover:bg-indigo-900 transition-colors font-medium">
-                Save
+
+        <!-- Date + Time side by side -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {% for field in form %}
+                {% if field.name == 'date' or field.name == 'time' %}
+                <div>
+                    <label class="block text-sm font-medium text-slate-600 mb-1">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        <p class="text-red-600 text-sm mt-1">{{ field.errors|striptags }}</p>
+                    {% endif %}
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <!-- Location + Category side by side -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {% for field in form %}
+                {% if field.name == 'location' or field.name == 'category' %}
+                <div>
+                    <label class="block text-sm font-medium text-slate-600 mb-1">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        <p class="text-red-600 text-sm mt-1">{{ field.errors|striptags }}</p>
+                    {% endif %}
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <!-- Remaining fields (image, rsvp_users, anything else not already placed) -->
+        {% for field in form %}
+            {% if field.name != 'name' and field.name != 'description' and field.name != 'date' and field.name != 'time' and field.name != 'location' and field.name != 'category' %}
+            <div>
+                <label class="block text-sm font-medium text-slate-600 mb-1">{{ field.label }}</label>
+                {% if field.name == 'image' %}
+                    <div class="border-2 border-dashed border-stone-300 rounded-lg p-4 hover:border-amber-400 transition-colors">
+                        {{ field }}
+                    </div>
+                {% else %}
+                    {{ field }}
+                {% endif %}
+                {% if field.errors %}
+                    <p class="text-red-600 text-sm mt-1">{{ field.errors|striptags }}</p>
+                {% endif %}
+            </div>
+            {% endif %}
+        {% endfor %}
+
+        <div class="flex items-center space-x-4 pt-4 border-t border-stone-100">
+            <button type="submit" class="bg-indigo-950 text-white px-6 py-2.5 rounded hover:bg-indigo-900 transition-colors font-medium">
+                {% if form.instance.pk %}Save Changes{% else %}Create Event{% endif %}
             </button>
-            <a href="{% url 'event_list' %}" class="text-slate-500 hover:text-amber-600 transition-colors">Cancel</a>
+            <a href="{% url 'event_list' %}" class="text-slate-500 hover:text-amber-600 transition-colors text-sm">Cancel</a>
         </div>
     </form>
 </div>
