@@ -23,12 +23,16 @@ def style_fields(form_instance):
 
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True)
-    phone = forms.CharField(required=False, label='Phone')
-    profile_picture = forms.ImageField(required=False, label='Profile picture')
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'phone', 'profile_picture', 'password1', 'password2']
+        # phone_number o profile_picture ekhon model theke auto-generate hobe,
+        # tai naam thik thakbe ar RegexValidator o kaj korbe
+        fields = ['username', 'email', 'phone_number', 'profile_picture', 'password1', 'password2']
+        labels = {
+            'phone_number': 'Phone Number',
+            'profile_picture': 'Profile Picture',
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -38,12 +42,14 @@ class CustomUserCreationForm(UserCreationForm):
 class CustomUserChangeForm(UserChangeForm):
     password = None  # edit form-e password field dekhate chai na
     email = forms.EmailField(required=True)
-    phone = forms.CharField(required=False, label='Phone')
-    profile_picture = forms.ImageField(required=False, label='Profile picture')
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'phone', 'profile_picture']
+        fields = ['username', 'email', 'phone_number', 'profile_picture']
+        labels = {
+            'phone_number': 'Phone Number',
+            'profile_picture': 'Profile Picture',
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
