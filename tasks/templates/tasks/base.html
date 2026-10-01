@@ -22,42 +22,44 @@
 <body class="bg-stone-50 text-slate-800 min-h-screen flex flex-col">
 
     <!-- Navigation bar -->
-    <nav class="bg-indigo-950 text-stone-100">
-        <div class="container mx-auto px-4 grid grid-cols-3 items-center h-16">
+   <nav class="bg-indigo-950 text-stone-100">
+        <div class="container mx-auto px-4"
+             style="display:grid; grid-template-columns:1fr auto 1fr; align-items:center; height:64px;">
 
             <!-- Left: Logo -->
-            <div class="justify-self-start">
+            <div style="justify-self:start;">
                 <a href="{% url 'event_list' %}" class="font-display text-xl font-semibold tracking-tight text-stone-50">
                     Event<span class="text-amber-400">Manage</span>
                 </a>
             </div>
 
             <!-- Center: Links -->
-            <ul class="flex justify-center space-x-8 text-sm font-medium">
+            <ul style="display:flex; gap:32px; list-style:none; margin:0; padding:0; font-size:14px; font-weight:500;">
                 <li><a href="{% url 'event_list' %}" class="border-b-2 border-transparent hover:border-amber-400 pb-1 transition-colors">Events</a></li>
                 <li><a href="{% url 'category_list' %}" class="border-b-2 border-transparent hover:border-amber-400 pb-1 transition-colors">Categories</a></li>
                 <li><a href="{% url 'participant_list' %}" class="border-b-2 border-transparent hover:border-amber-400 pb-1 transition-colors">Participants</a></li>
                 <li><a href="{% url 'dashboard' %}" class="border-b-2 border-transparent hover:border-amber-400 pb-1 transition-colors">Dashboard</a></li>
             </ul>
 
-            <!-- Right: User photo -->
-            <div class="justify-self-end flex items-center gap-3">
+            <!-- Right: Login/Register or user photo -->
+            <div style="justify-self:end; display:flex; align-items:center; gap:12px;">
                 {% if user.is_authenticated %}
                     {% if user.profile_picture and user.profile_picture.name != 'profiles/default.jpg' %}
                         <img src="{{ user.profile_picture.url }}" alt="{{ user.username }}"
-                             class="h-10 w-10 rounded-full object-cover border-2 border-amber-400">
+                             style="height:40px; width:40px; border-radius:9999px; object-fit:cover; border:2px solid #fbbf24;">
                     {% else %}
-                        <div class="h-10 w-10 rounded-full bg-amber-400 text-indigo-950 font-semibold flex items-center justify-center">
+                        <div style="height:40px; width:40px; border-radius:9999px; background:#fbbf24; color:#1e1b4b; font-weight:600; display:flex; align-items:center; justify-content:center;">
                             {{ user.username|slice:":1"|upper }}
                         </div>
                     {% endif %}
-                    <form method="post" action="{% url 'logout' %}">
+                    <form method="post" action="{% url 'logout' %}" style="margin:0;">
                         {% csrf_token %}
-                        <button type="submit" class="text-sm hover:text-amber-400 transition-colors">Logout</button>
+                        <button type="submit" style="font-size:14px;">Logout</button>
                     </form>
                 {% else %}
-                    <a href="{% url 'login' %}" class="text-sm hover:text-amber-400 transition-colors">Login</a>
-                    <a href="{% url 'register' %}" class="text-sm bg-amber-400 text-indigo-950 px-3 py-1.5 rounded font-semibold">Register</a>
+                    <a href="{% url 'login' %}" style="font-size:14px;">Login</a>
+                    <a href="{% url 'register' %}"
+                       style="background:#fbbf24; color:#1e1b4b; padding:6px 12px; border-radius:4px; font-weight:600; font-size:14px;">Register</a>
                 {% endif %}
             </div>
 
